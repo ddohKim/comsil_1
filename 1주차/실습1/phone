@@ -1,0 +1,23 @@
+if [ $# -eq 0 ]
+then 
+        echo "Usage: phone searchfor [... searchfor]"
+        echo "(You didn't tell me what you want to search for.)"
+else
+        firstword=true
+        for A in $@
+        do
+                if [ $A == $1 ]
+                then 
+                        if [ $firstword == 'true' ]
+                        then
+                                information=$A
+                                firstword=false
+                        else
+                        information=$information\|$A
+                        fi
+                else
+                information=$information\|$A
+                fi
+        done
+egrep -i "($information)" mydata | awk -f display.awk
+fi
